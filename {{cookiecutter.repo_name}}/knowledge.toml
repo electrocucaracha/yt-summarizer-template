@@ -1,0 +1,10 @@
+model = {{ cookiecutter.model | tojson }}
+api_base = {{ cookiecutter.api_base | tojson }}
+language = {{ cookiecutter.language | tojson }}
+workers = 1
+
+# Add one named entry per public YouTube playlist.
+# [playlists.conference]
+# url = "https://www.youtube.com/playlist?list=YOUR_PLAYLIST_ID"
+
+[playlists]
