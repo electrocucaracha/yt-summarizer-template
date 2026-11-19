@@ -52,9 +52,12 @@ def validate(project, branch):
         "install",
         "build",
         "qmd-setup",
+        "update-versions",
         "template-update",
         cwd=project,
     )
+    for script in project.glob("**/*.sh"):
+        run("bash", "-n", str(script), cwd=project)
     validate_runner(project)
     run("make", "lint", cwd=project)
 

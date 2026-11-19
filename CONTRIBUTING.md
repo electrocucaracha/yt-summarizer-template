@@ -2,7 +2,7 @@
 
 Use this guide to change and validate the template itself.
 To create a knowledge repository instead, follow
-[Getting Started](docs/getting-started.md).
+[Create a knowledge repository](docs/how-to-guides/create-knowledge-repository.md).
 
 ## Prerequisites
 
@@ -18,9 +18,14 @@ The Make targets use uv to provide Python 3.12 and the pinned development tools.
   [yt-summarizer](https://github.com/electrocucaracha/yt-summarizer), rather than
   duplicating that logic here.
 - Keep sample content generic. Do not include personal notes or credentials.
-- Preserve the [repository ownership rules](docs/template-updates.md) when
+- Preserve the [repository ownership rules](docs/explanations/template-model.md) when
   changing how shared files are updated.
 - Update the relevant guide when changing setup, commands, or update behavior.
+
+Edit the template's [documentation site](docs/index.md) under the root `docs/`.
+GitHub Pages publishes that directory from `main`.
+The generated project's `docs/` is a separate knowledge bundle built with Kiso;
+do not put template documentation there.
 
 The generated project contains the shared development requirements and Python
 tool configuration. Keep Black and isort settings compatible when updating them.

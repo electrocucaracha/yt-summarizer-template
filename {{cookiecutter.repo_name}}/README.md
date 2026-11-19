@@ -4,6 +4,8 @@
 
 Maintained by {{ cookiecutter.author_name }}.
 The canonical knowledge collection lives in [docs/](docs/index.md).
+That directory is the source for this repository's knowledge portal, not the
+[template documentation site](https://electrocucaracha.github.io/yt-summarizer-template/).
 
 ## Setup
 
@@ -64,8 +66,11 @@ implement a separate cache or force regeneration.
 
 ## Browse and Publish
 
-Install [Kiso CLI v0.2.7](https://github.com/oak-invest/kiso/releases/tag/v0.2.7)
-as `kiso` on your `PATH`, then run:
+`make check` and `make build` download the pinned
+[Kiso CLI v0.2.7](https://github.com/oak-invest/kiso/releases/tag/v0.2.7) into a
+local cache on first use through [scripts/run_kiso.sh](scripts/run_kiso.sh).
+Native binaries exist for Linux x86_64 and macOS arm64; other platforms need
+`java` to run the release JAR. Then run:
 
 ```bash
 make check
@@ -125,6 +130,10 @@ make template-check
 make template-diff
 make template-update
 ```
+
+To refresh the pinned Kiso CLI version and GitHub Action revisions, run
+`make update-versions`. It needs network access and Git, and it formats the
+Python scripts afterward.
 
 Review and commit the resulting changes. Cruft excludes `docs/` and
 `knowledge.toml`, so your notes, indexes, playlists, and local model choices

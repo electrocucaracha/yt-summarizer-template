@@ -1,0 +1,6 @@
+remote_theme: just-the-docs/just-the-docs
+title: YouTube Knowledge Template
+description: Create, publish, and maintain knowledge repositories from YouTube playlists.
+enable_copy_code_button: true
+aux_links:
+  Template on GitHub: https://github.com/electrocucaracha/yt-summarizer-template

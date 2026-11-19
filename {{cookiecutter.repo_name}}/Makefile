@@ -5,7 +5,7 @@ QMD_COLLECTION ?= {{ cookiecutter.repo_name }}
 export QMD_FORCE_CPU ?= 1
 TOOLS := uv run --no-project --python 3.12 --with-requirements requirements-dev.txt
 
-.PHONY: install summarize summarize-dry-run lint fmt check build preview qmd-setup qmd-update qmd-embed qmd-check qmd-mcp template-check template-diff template-update
+.PHONY: install summarize summarize-dry-run lint fmt check build preview qmd-setup qmd-update qmd-embed qmd-check qmd-mcp update-versions template-check template-diff template-update
 
 install:
 	uv tool install --python 3.12 "$(SUMMARIZER_SOURCE)"
@@ -30,18 +30,19 @@ fmt:
 	$(TOOLS) black scripts
 
 check:
-	kiso check --source=docs
+	bash scripts/run_kiso.sh check
 
 build:
-	kiso build --source=docs --destination=public
+	bash scripts/run_kiso.sh build --destination=public
 
 preview: build
 	python3 -m http.server $(PORT) --bind 127.0.0.1 --directory public
 
 qmd-setup:
-	qmd init
-	qmd collection add "$(CURDIR)/docs" --name "$(QMD_COLLECTION)"
-	qmd context add "qmd://$(QMD_COLLECTION)" "OKF video notes organized by playlist and topic."
+	QMD_COLLECTION="$(QMD_COLLECTION)" bash scripts/configure_qmd.sh
+
+update-versions:
+	bash ci/update_versions.sh
 
 qmd-update:
 	qmd update
