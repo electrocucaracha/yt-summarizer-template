@@ -59,6 +59,7 @@ def validate(project, branch):
     for script in project.glob("**/*.sh"):
         run("bash", "-n", str(script), cwd=project)
     validate_runner(project)
+    validate_site_styling(project)
     run("make", "lint", cwd=project)
 
 
@@ -119,6 +120,52 @@ def validate_runner(project):
     else:
         raise AssertionError("Unknown collection accepted")
     manifest.write_text(original)
+
+
+def validate_site_styling(project):
+    """Check that metrics are added once and the template CSS reaches the build."""
+    spec = importlib.util.spec_from_file_location(
+        "style_site", project / "scripts/style_site.py"
+    )
+    if spec is None or spec.loader is None:
+        raise RuntimeError("Cannot load the generated site styler")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    with tempfile.TemporaryDirectory(prefix="yt-site-style-") as temporary:
+        root = Path(temporary)
+        source = root / "docs"
+        destination = root / "public"
+        note = source / "conference/talk.md"
+        page = destination / "conference/talk.html"
+        note.parent.mkdir(parents=True)
+        page.parent.mkdir(parents=True)
+        (destination / "assets/css").mkdir(parents=True)
+        note.write_text(
+            "---\nyoutube_stats:\n"
+            "  view_count: 1234\n"
+            "  like_count: 5\n"
+            "  channel_subscriber_count: 6000\n"
+            "---\n# Talk\n",
+            encoding="utf-8",
+        )
+        page.write_text(
+            '<article class="kiso-content"><h1>Talk</h1></article>',
+            encoding="utf-8",
+        )
+        stylesheet = destination / "assets/css/application.css"
+        stylesheet.write_text("/* Kiso styles */\n", encoding="utf-8")
+
+        module.style_site(source, destination)
+        module.style_site(source, destination)
+
+        rendered = page.read_text(encoding="utf-8")
+        assert rendered.count('class="kiso-youtube-stats"') == 1
+        assert "<dt>Views</dt><dd>1,234</dd>" in rendered
+        assert "<dt>Likes</dt><dd>5</dd>" in rendered
+        assert "<dt>Subscribers</dt><dd>6,000</dd>" in rendered
+        css = stylesheet.read_text(encoding="utf-8")
+        assert css.count("YouTube knowledge template stylesheet") == 1
+        assert ".kiso-youtube-stats" in css
 
 
 def commit(repository):

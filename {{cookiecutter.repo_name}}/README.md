@@ -79,6 +79,8 @@ make preview
 
 The local preview is at <http://127.0.0.1:8099>. Override its port with `PORT=8100`.
 `make build` writes the static portal to `public/`.
+When a note has `youtube_stats` in its front matter, the build displays its
+view, like, and channel subscriber counts.
 
 For GitHub Pages, push to
 `{{ cookiecutter.github_owner }}/{{ cookiecutter.repo_name }}` and choose

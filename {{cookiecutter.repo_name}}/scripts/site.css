@@ -1,0 +1,25 @@
+.kiso-youtube-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin: 0 0 1.5rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--color-base-300);
+  color: var(--color-base-content);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.kiso-youtube-stats div {
+  display: flex;
+  gap: 0.35rem;
+  align-items: baseline;
+}
+
+.kiso-youtube-stats dt {
+  font-weight: 600;
+}
+
+.kiso-youtube-stats dd {
+  margin: 0;
+}
