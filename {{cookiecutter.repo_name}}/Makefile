@@ -34,7 +34,7 @@ check:
 
 build:
 	bash scripts/run_kiso.sh build --destination=public
-	python3 scripts/style_site.py public
+	python3 scripts/inject_youtube_stats.py public
 
 preview: build
 	python3 -m http.server $(PORT) --bind 127.0.0.1 --directory public

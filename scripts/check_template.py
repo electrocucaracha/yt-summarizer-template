@@ -30,7 +30,10 @@ def validate(project, branch):
     for filename in project.rglob("*"):
         if not filename.is_file():
             continue
-        content = filename.read_text(encoding="utf-8")
+        try:
+            content = filename.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            continue
         assert "{{cookiecutter." not in content, filename
         assert "{{ cookiecutter." not in content, filename
         assert "{% raw %}" not in content, filename
@@ -42,6 +45,10 @@ def validate(project, branch):
             compile(content, str(filename), "exec")
     workflow = yaml.safe_load((project / ".github/workflows/pages.yml").read_text())
     assert workflow[True]["push"]["branches"] == [branch]
+    assert any(
+        step.get("run") == "python scripts/inject_youtube_stats.py public"
+        for step in workflow["jobs"]["publish"]["steps"]
+    )
     assert (
         workflow["jobs"]["publish"]["environment"]["url"]
         == "${{ steps.deployment.outputs.page_url }}"
@@ -125,7 +132,7 @@ def validate_runner(project):
 def validate_site_styling(project):
     """Check that metrics are added once and the template CSS reaches the build."""
     spec = importlib.util.spec_from_file_location(
-        "style_site", project / "scripts/style_site.py"
+        "inject_youtube_stats", project / "scripts/inject_youtube_stats.py"
     )
     if spec is None or spec.loader is None:
         raise RuntimeError("Cannot load the generated site styler")

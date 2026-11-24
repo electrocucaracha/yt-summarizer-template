@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - {? {cookiecutter.default_branch | tojson: ''} : ''}
+      - {{ cookiecutter.default_branch | tojson }}
 permissions:
   contents: read
 concurrency:
@@ -31,7 +31,7 @@ jobs:
           source: docs
           destination: public
       - name: Style portal
-        run: python scripts/style_site.py public
+        run: python scripts/inject_youtube_stats.py public
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: public

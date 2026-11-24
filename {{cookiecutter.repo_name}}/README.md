@@ -1,11 +1,63 @@
-# {{ cookiecutter.project_name }}
+# {{ cookiecutter.readme_title }}
 
-{{ cookiecutter.collection_description }}
+<!-- markdown-link-check-disable-next-line -->
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+<!-- markdownlint-disable MD034 -->
+[![Check Python](https://github.com/{{ cookiecutter.github_owner }}/{{ cookiecutter.repo_name }}/workflows/Check%20Python/badge.svg)](https://github.com/{{ cookiecutter.github_owner }}/{{ cookiecutter.repo_name }}/actions/workflows/python.yml)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-Maintained by {{ cookiecutter.author_name }}.
-The canonical knowledge collection lives in [docs/](docs/index.md).
-That directory is the source for this repository's knowledge portal, not the
-[template documentation site](https://electrocucaracha.github.io/yt-summarizer-template/).
+<!-- markdown-link-check-disable-next-line -->
+![visitors](https://visitor-badge.laobi.icu/badge?page_id={{ cookiecutter.github_owner }}.{{ cookiecutter.repo_name }})
+[![Scc Code Badge](https://sloc.xyz/github/{{ cookiecutter.github_owner }}/{{ cookiecutter.repo_name }}?category=code)](https://github.com/boyter/scc/)
+[![Scc COCOMO Badge](https://sloc.xyz/github/{{ cookiecutter.github_owner }}/{{ cookiecutter.repo_name }}?category=cocomo)](https://github.com/boyter/scc/)
+
+{{ cookiecutter.readme_title }} is a curated, searchable collection of notes from
+technology conference videos.
+
+It turns long-form talks into durable technical knowledge by capturing the
+ideas, explanations, examples, and lessons that are most useful after the
+video ends.
+The collection brings together perspectives from conference speakers across
+cloud-native computing, Kubernetes, artificial intelligence, developer
+productivity, engineering leadership, and related areas.
+
+The information is produced by
+[`yt-summarizer`](https://github.com/electrocucaracha/yt-summarizer), an
+application that fetches conference videos uploaded to YouTube, retrieves their
+transcripts, and uses a large language model to generate summaries and extract key
+points.
+This project organizes that generated information into a durable knowledge base
+that is easier to browse, search, and reuse.
+
+The notes are organized as a structured, machine-readable knowledge base using
+[Open Knowledge Format (OKF) v0.2](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md).
+The canonical collection lives in [`docs/`](docs/index.md), where content is
+grouped into navigable conference and subject areas.
+This structure supports both broad exploration by topic and focused reading of
+an individual talk.
+{% if cookiecutter.include_diagram %}
+![Diagram](docs/assets/diagram.png)
+{% endif %}
+
+## What This Offers
+
+- **Curated learning**: Explore concise notes from talks about Kubernetes,
+  cloud-native platforms, artificial intelligence, developer productivity,
+  leadership, and other areas of modern technology.
+- **Efficient understanding**: Read a short summary and key takeaways before
+  deciding whether a full talk is relevant to your work or interests.
+- **In-page playback**: Watch talks in the portal through privacy-enhanced YouTube players, with original YouTube links available when embedding is restricted.
+- **Structured knowledge**: Use consistent notes that combine descriptive
+  metadata, a summary, key takeaways, the original video, and its transcript.
+- **Progressive discovery**: Move from the collection index to a subject or
+  conference directory, then to an individual talk without losing context.
+  Previous and Next links follow the collection index order, with a direct link back to the collection.
+- **Semantic search**: Find related ideas by meaning and intent, not only by
+  exact keyword matches.
+- **Knowledge reuse**: Return to the collection as a reference for research,
+  technical discussions, writing, planning, and continued learning.
+- **Machine-readable content**: Build on a consistent format that makes the
+  knowledge base suitable for indexing, automation, and future integrations.
 
 ## Setup
 
@@ -79,8 +131,6 @@ make preview
 
 The local preview is at <http://127.0.0.1:8099>. Override its port with `PORT=8100`.
 `make build` writes the static portal to `public/`.
-When a note has `youtube_stats` in its front matter, the build displays its
-view, like, and channel subscriber counts.
 
 For GitHub Pages, push to
 `{{ cookiecutter.github_owner }}/{{ cookiecutter.repo_name }}` and choose
